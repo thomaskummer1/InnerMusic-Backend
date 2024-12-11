@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 import session from 'express-session'
 import UserRoutes from './Users/routes.js'
+import RatingRoutes from './Ratings/routes.js'
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/innerMusic";
 mongoose.connect(CONNECTION_STRING);
 const app = express()
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV !== "development") {
     };
 }
 app.use(session(sessionOptions));
-app.use(cors())
 app.use(express.json())
 UserRoutes(app)
+RatingRoutes(app)
 app.listen(process.env.PORT || 4000);
