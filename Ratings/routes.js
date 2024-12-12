@@ -31,4 +31,9 @@ export default function RatingRoutes(app) {
         res.json(ratings);
     };
     app.get('/api/ratings/artist/:artist', findRatingsByArtist);
+    const removeRating = async (req, res) => {
+        await dao.removeRating(req.params.ratingId);
+        res.json({ message: 'Rating removed' });
+    };
+    app.delete('/api/ratings/:ratingId', removeRating);
 }

@@ -8,3 +8,4 @@ export const findRatingById = (ratingId) => model.findById(ratingId);
 export const findRatingsByUser = (userId) => model.find({ user: userId });
 export const findRatingsByAlbum = (album) => model.find({ album: album });
 export const findRatingsByArtist = (artist) => model.find({ artist: artist });
+export const removeRating = (ratingId) => model.deleteOne({ _id: ratingId });
