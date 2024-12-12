@@ -27,4 +27,9 @@ export default function ReviewRoutes(app) {
         res.json(reviews[0]);
     };
     app.get('/api/reviews/album/:album', findReviewByAlbum);
+    const updateReview = async (req, res) => {
+        const review = await dao.updateReview(req.params.albumName, req.body);
+        res.json(review);
+    };
+    app.put('/api/reviews/:albumName', updateReview);
 }
