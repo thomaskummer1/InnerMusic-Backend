@@ -12,7 +12,7 @@ export default function RatingRoutes(app) {
     };
     app.get('/api/ratings', findAllRatings);
     const findRatingById = async (req, res) => {
-        const rating = await dao.findRatingById(req.params.ratingId);
+        let rating = await dao.findRatingById(req.params.ratingId);
         res.json(rating);
     };
     app.get('/api/ratings/:ratingId', findRatingById);
