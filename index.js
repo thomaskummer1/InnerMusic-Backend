@@ -6,6 +6,7 @@ import session from 'express-session'
 import UserRoutes from './Users/routes.js'
 import RatingRoutes from './Ratings/routes.js'
 import FriendsRoutes from './Friends/routes.js'
+import ReviewRoutes from './Review/routes.js'
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/innerMusic";
 mongoose.connect(CONNECTION_STRING);
 const app = express()
@@ -33,4 +34,5 @@ app.use(express.json())
 UserRoutes(app)
 RatingRoutes(app)
 FriendsRoutes(app)
+ReviewRoutes(app)
 app.listen(process.env.PORT || 4000);

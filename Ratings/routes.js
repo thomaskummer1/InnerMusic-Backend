@@ -36,4 +36,14 @@ export default function RatingRoutes(app) {
         res.json({ message: 'Rating removed' });
     };
     app.delete('/api/ratings/:ratingId', removeRating);
+    const updateRating = async (req, res) => {
+        await dao.updateRating(req.params.ratingId, req.body);
+        res.json({ message: 'Rating updated' });
+    };
+    app.put('/api/ratings/:ratingId', updateRating);
+    const findRatingByUserAndAlbum = async (req, res) => {
+        const rating = await dao.findRatingByUserAndAlbum(req.params.userId, req.params.album);
+        res.json(rating);
+    };
+    app.get('/api/ratings/user/:userId/album/:album', findRatingByUserAndAlbum);
 }
