@@ -35,4 +35,6 @@ UserRoutes(app)
 RatingRoutes(app)
 FriendsRoutes(app)
 ReviewRoutes(app)
+console.log(process.env.PORT || 4000);
+console.log(process.env.NETLIFY_URL || "http://localhost:3000");
 app.listen(process.env.PORT || 4000);
