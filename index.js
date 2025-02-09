@@ -14,8 +14,6 @@ app.use(
     cors({
       credentials: true,
       origin: process.env.NETLIFY_URL || "http://localhost:3000",
-      methods: "GET,POST,PUT,DELETE",
-      allowedHeaders: "Content-Type,Authorization",
     })
    ); 
 const sessionOptions = {
@@ -27,13 +25,10 @@ if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
       sameSite: "none",
-      secure: true,
+      secure: false,
       domain: process.env.NODE_SERVER_DOMAIN,
     };
 }
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
 app.use(session(sessionOptions));
 app.use(express.json())
 UserRoutes(app)
