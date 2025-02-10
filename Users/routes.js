@@ -1,4 +1,5 @@
 import * as dao from './dao.js';
+import bcryptjs from 'bcryptjs';
 
 export default function UserRoutes(app) {
     const createUser = async (req, res) => {
@@ -33,7 +34,8 @@ export default function UserRoutes(app) {
           res.status(400).json({ message: "Username already taken" });
           return;
         }
-        console.log(req.body);
+        const salt = await bcryptjs.genSalt();
+        req.body.password = bcryptjs.hashSync(req.body.password, salt);
         const currentUser = await dao.createUser(req.body);
         req.session["currentUser"] = currentUser;
         res.json(currentUser);
@@ -41,8 +43,12 @@ export default function UserRoutes(app) {
     app.post("/api/users/signup", signup);
     const signin = async (req, res) => {
         const { username, password } = req.body;
-        const currentUser = await dao.findUserByCredentials(username, password);
-        if (currentUser) {
+        const currentUser = await dao.findUserByUsername(username);
+        if (!currentUser) {
+            return res.status(401).json({ message: "User not found" });
+        }
+        const isValid = bcryptjs.compareSync(password, currentUser.password);
+        if (isValid) {
           req.session["currentUser"] = currentUser;
           res.json(currentUser);
         } else {
